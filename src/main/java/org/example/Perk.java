@@ -5,7 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 @Entity
-public class perk {
+public class Perk {
     @Id
     @GeneratedValue
     private int pid;
