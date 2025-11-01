@@ -8,5 +8,8 @@ import jakarta.persistence.Id;
 public class User {
     @Id
     @GeneratedValue
-    private int Uid;
+    private int uid;
+    private String Name;
+    private String Email;
+    private String Password;
 }
