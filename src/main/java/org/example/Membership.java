@@ -32,6 +32,7 @@ public class Membership {
     }
 
     public void setType(String type) {
+        this.type = type;
     }
 
     public int getNumber() {
@@ -39,6 +40,7 @@ public class Membership {
     }
 
     public void setNumber(int number) {
+        this.number = number;
     }
 
 
