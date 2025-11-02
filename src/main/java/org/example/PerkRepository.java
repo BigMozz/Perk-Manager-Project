@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PerkRepository extends CrudRepository<Perk, Integer> {
-    Perk findPerkByPid(Integer pid);
+    Perk findPerkByPid(@Param("pid") Integer pid);
 }
