@@ -7,7 +7,8 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class Rating {
     @Id
-    private Long rid;
+
+    private Integer rid;
 
     @ManyToOne
     @JoinColumn(name = "uid")
@@ -30,7 +31,7 @@ public class Rating {
     }
 
     public long getRid() { return rid; }
-    public void setRid(long rid) {
+    public void setRid(Integer rid) {
         this.rid = rid;
     }
 

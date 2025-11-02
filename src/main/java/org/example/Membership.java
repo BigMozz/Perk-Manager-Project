@@ -1,13 +1,11 @@
 package org.example;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 @Entity
 public class Membership {
     @Id
-    private Long mid;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer mid;
     @ManyToOne
     @JoinColumn(name = "uid")
     private User user;

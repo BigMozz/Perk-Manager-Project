@@ -1,50 +1,34 @@
 package org.example;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "app_user")  // Avoid "user" reserved keyword
 public class User {
     @Id
-    @GeneratedValue
-    private int uid;
-    private String Name;
-    private String Email;
-    private String Password;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer uid;
 
-    public User() {
+    private String name;
+    private String email;
+    private String password;
 
-
-    }
+    // Constructors, getters, setters...
+    public User() {}
 
     public User(String name, String email, String password) {
-        this.Name = name;
-        this.Email = email;
-        this.Password = password;
+        this.name = name;
+        this.email = email;
+        this.password = password;
     }
-    public int getUid() {
-        return uid;
-    }
-    public void setUid(int uid) {
-        this.uid = uid;
-    }
-    public String getName() {
-        return Name;
-    }
-    public void setName(String name) {
-        this.Name = name;
-    }
-    public String getEmail() {
-        return Email;
-    }
-    public void setEmail(String email) {
-        this.Email = email;
-    }
-    public String getPassword() {
-        return Password;
-    }
-    public void setPassword(String password) {
-        this.Password = password;
-    }
+
+    // Getters and setters...
+    public Integer getUid() { return uid; }
+    public void setUid(Integer uid) { this.uid = uid; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
 }
