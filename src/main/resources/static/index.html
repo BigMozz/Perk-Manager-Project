@@ -1,18 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Perk Manager</title>
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <h1>Perk Manager</h1>
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Perk Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h2>Login</h2>
+<form id="loginForm">
+    <input type="email" id="loginEmail" placeholder="Email" required><br>
+    <input type="password" id="loginPassword" placeholder="Password" required><br>
+    <button type="submit">Login</button>
+</form>
+<p>Don't have an account? <a href="signup.html">Sign up</a></p>
 
-        <input id="search" type="text" placeholder="Search perks">
+<script>
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
 
-        <div id="perk-list"></div>
+        const email = document.getElementById("loginEmail").value;
+        const password = document.getElementById("loginPassword").value;
 
-        <script src="script.js"></script>
-    </body>
+        const res = await fetch("http://localhost:8080/api/user/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password })
+        });
+
+        const text = await res.text();
+        alert(text);
+
+        if (text === "Login successful") {
+            window.location.href = "perks.html";
+        }
+    });
+</script>
+</body>
 </html>
