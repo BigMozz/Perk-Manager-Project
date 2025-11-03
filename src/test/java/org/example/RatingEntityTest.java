@@ -43,7 +43,7 @@ public class RatingEntityTest {
     Rating rating = new Rating();
 
     // When
-    rating.setRid(1L);
+    rating.setRid(1);
     rating.setUser(testUser);
     rating.setPerk(testPerk);
     rating.setUpvote(10);
