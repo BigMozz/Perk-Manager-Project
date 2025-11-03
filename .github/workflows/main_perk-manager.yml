@@ -1,4 +1,7 @@
-name: Build and deploy JAR app to Azure Web App
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy JAR app to Azure Web App - Perk-Manager
 
 on:
   push:
@@ -10,7 +13,7 @@ jobs:
   build:
     runs-on: windows-latest
     permissions:
-      contents: read
+      contents: read #This is required for actions/checkout
 
     steps:
       - uses: actions/checkout@v4
@@ -22,7 +25,7 @@ jobs:
           distribution: 'microsoft'
 
       - name: Build with Maven
-        run: mvn clean install -DskipTests
+        run: mvn clean install
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -34,21 +37,21 @@ jobs:
     runs-on: windows-latest
     needs: build
     permissions:
-      id-token: write
-      contents: read
+      id-token: write #This is required for requesting the JWT
+      contents: read #This is required for actions/checkout
 
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: java-app
-
+      
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_CC139E618DC8431295CF3355DCA819ED}}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_F02A631315AE46109F6244BCA7FB7D6D }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_C20CBBFBF3DC4476A61A58A983E1C51C }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_0E64B0132E0B41F4B4BEA17B66B3E237 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_913951D5873147549FFFEC3796A59D4E }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_1849B93D729F4DA193F041A3C7237698 }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
@@ -57,3 +60,4 @@ jobs:
           app-name: 'Perk-Manager'
           slot-name: 'Production'
           package: '*.jar'
+          
