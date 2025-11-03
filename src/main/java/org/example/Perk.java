@@ -9,7 +9,7 @@ import java.util.List;
 public class Perk {
     @Id
     @GeneratedValue
-    private int pid;
+    private Integer pid;
     private String title;
     private String discount;
     private String product;
@@ -19,7 +19,7 @@ public class Perk {
     @JoinColumn(name = "mid")
     private Membership membership;
 
-    @OneToMany(mappedBy = "pid")
+    @OneToMany(mappedBy = "perk", cascade = CascadeType.ALL)
     private List<Rating> ratings;
 
     public Perk() {}
