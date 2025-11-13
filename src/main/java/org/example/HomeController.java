@@ -16,11 +16,14 @@ public class HomeController {
         this.userService = userService;
     }
 
-    // ===== ROOT REDIRECT TO LOGIN =====
+    // ===== ROOT REDIRECT TO PERKS =====
     @GetMapping("/")
     public String rootRedirect(Model model) {
-        model.addAttribute("loginUser", new User());
-        return "login"; // templates/login.html
+        // model.addAttribute("loginUser", new User());
+        // return "login"; // templates/login.html
+        List<Perk> perks = new ArrayList<>();
+        model.addAttribute("perks", perks);
+        return "perks"; // templates/perks.html
     }
 
     // ===== SIGNUP =====
@@ -56,7 +59,6 @@ public class HomeController {
             return "login";
         }
     }
-
 
     // ===== PERKS DASHBOARD =====
     @GetMapping("/perks")
