@@ -1,13 +1,11 @@
 package org.example;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+
 @Entity
 public class Rating {
     @Id
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer rid;
 
     @ManyToOne
