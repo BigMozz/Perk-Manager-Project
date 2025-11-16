@@ -1,11 +1,12 @@
 package org.example;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
-@RestController
+@Controller
 @RequestMapping("/api/votes")
 @CrossOrigin(origins = "*")
 
