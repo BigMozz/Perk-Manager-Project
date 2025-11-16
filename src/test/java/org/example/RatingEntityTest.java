@@ -50,7 +50,7 @@ public class RatingEntityTest {
     rating.setDownvote(3);
 
     // Then
-    assertThat(rating.getRid()).isEqualTo(1L);
+    assertThat(rating.getRid()).isEqualTo(1);
     assertThat(rating.getUser()).isEqualTo(testUser);
     assertThat(rating.getPerk()).isEqualTo(testPerk);
     assertThat(rating.getUpvote()).isEqualTo(10);
