@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 @Entity
 public class Membership {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer mid;
     @ManyToOne
     @JoinColumn(name = "uid")

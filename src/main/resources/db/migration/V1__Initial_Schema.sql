@@ -2,10 +2,6 @@
 -- SQL Server migration script
 
 
-CREATE SEQUENCE dbo.membership_seq
-    START WITH 1
-    INCREMENT BY 1;
-
 
 -- Create app_user table
 CREATE TABLE app_user (
