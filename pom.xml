@@ -44,8 +44,7 @@
         </dependency>
 
 
-
-        <!--SQL Driver -->
+        <!--SQL -->
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>mssql-jdbc</artifactId>
@@ -64,12 +63,6 @@
             <artifactId>flyway-sqlserver</artifactId>
         </dependency>
 
-        <!-- env file dependency -->
-        <dependency>
-            <groupId>me.paulschwarz</groupId>
-            <artifactId>spring-dotenv</artifactId>
-            <version>4.0.0</version>
-        </dependency>
 
         <!-- Testing -->
         <dependency>
