@@ -1,6 +1,12 @@
 -- V1__Initial_Schema.sql
 -- SQL Server migration script
 
+
+CREATE SEQUENCE dbo.membership_seq
+    START WITH 1
+    INCREMENT BY 1;
+
+
 -- Create app_user table
 CREATE TABLE app_user (
                           uid INT IDENTITY(1,1) PRIMARY KEY,
@@ -36,8 +42,8 @@ CREATE TABLE rating (
                         pid INT,
                         upvote INT DEFAULT 0,
                         downvote INT DEFAULT 0,
-                        CONSTRAINT FK_rating_user FOREIGN KEY (uid) REFERENCES app_user(uid) ON DELETE CASCADE,
-                        CONSTRAINT FK_rating_perk FOREIGN KEY (pid) REFERENCES perk(pid) ON DELETE CASCADE
+                        CONSTRAINT FK_rating_user FOREIGN KEY (uid) REFERENCES app_user(uid),
+                        CONSTRAINT FK_rating_perk FOREIGN KEY (pid) REFERENCES perk(pid)
 );
 
 -- Create indexes
