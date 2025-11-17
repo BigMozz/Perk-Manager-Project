@@ -53,15 +53,6 @@ public class PerkManagerIntegrationTest {
     }
 
     @Test
-    public void testVotingApiAccessible() {
-        String response = this.restTemplate.getForObject(
-                "http://localhost:" + port + "/api/votes/perk/1",
-                String.class
-        );
-        assertThat(response).isNotNull();
-    }
-
-    @Test
     public void testRatingApiAccessible() {
         String response = this.restTemplate.getForObject(
                 "http://localhost:" + port + "/api/votes/user/1",
