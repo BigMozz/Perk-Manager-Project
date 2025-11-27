@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.servlet.http.HttpSession;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,9 +51,13 @@ public class HomeController {
     }
 
     @PostMapping("/login")
-    public String loginUser(@ModelAttribute("loginUser") User loginRequest, Model model) {
+    public String loginUser(@ModelAttribute("loginUser") User loginRequest, Model model, HttpSession session) {
         boolean valid = userService.validateLogin(loginRequest.getEmail(), loginRequest.getPassword());
         if (valid) {
+            // store user in session
+            User user = userService.getUserByEmail(loginRequest.getEmail());
+            session.setAttribute("loggedInUser", user);
+
             // Redirect to the perks page on successful login
             return "redirect:/perks";
         } else {
@@ -62,9 +68,13 @@ public class HomeController {
 
     // ===== PERKS DASHBOARD =====
     @GetMapping("/perks")
-    public String showPerks(Model model) {
+    public String showPerks(Model model, HttpSession session) {
         List<Perk> perks = new ArrayList<>();
         model.addAttribute("perks", perks);
+
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        System.out.println("Logged-in user: " + loggedInUser);
+        
         return "perks"; // templates/perks.html
     }
 }

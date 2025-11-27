@@ -13,6 +13,10 @@
         <a th:href="@{/login}" class="login-button">Login</a>
     </div>
 
+    <p th:if="${session.loggedInUser != null}" style="color: green;">
+        Logged in as: <span th:text="${session.loggedInUser.name}"></span>
+    </p>
+
     <div class="perk-container">
         <input id="perkName" type="text" placeholder="Perk Name">
         <input id="productType" type="text" placeholder="Product Type">
