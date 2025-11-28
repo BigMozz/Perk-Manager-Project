@@ -1,10 +1,52 @@
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', () => {
-    const perks = [
+    // Get perks from server-side data, or use fallback perks if empty/undefined
+    const defaultPerks = [
         { pid: 1, title: "10% off Movies", discount: "10%", product: "Movies", membership: "Visa", expiry: "2025-12-31", upvotes: 0, downvotes: 0 },
         { pid: 2, title: "Free Flight", discount: "100%", product: "Domestic Flight", membership: "Air Miles", expiry: "2026-01-15", upvotes: 0, downvotes: 0 },
         { pid: 3, title: "15% off Coffee", discount: "15%", product: "Coffee", membership: "Mastercard", expiry: "2025-11-15", upvotes: 0, downvotes: 0 }
     ];
+
+    // Use serverPerks if it exists and has items, otherwise use fallback
+    // Check if serverPerks is undefined, null, or empty array
+    const serverPerks = window.serverPerks;
+    let perksToUse;
+    if (serverPerks === undefined || serverPerks === null || !Array.isArray(serverPerks) || serverPerks.length === 0) {
+        perksToUse = defaultPerks;
+    } else {
+        perksToUse = serverPerks;
+    }
+
+    // Get login status - check multiple sources
+    const isLoggedIn = window.isLoggedIn === true ||
+        window.isLoggedIn === 'true' ||
+        (typeof window.isLoggedIn !== 'undefined' && window.isLoggedIn);
+
+    // Get user membership types - handle both array and string formats
+    let userMembershipTypes = window.userMembershipTypes || [];
+    if (typeof userMembershipTypes === 'string') {
+        try {
+            userMembershipTypes = JSON.parse(userMembershipTypes);
+        } catch (e) {
+            userMembershipTypes = [];
+        }
+    }
+
+    // Debug logging (can be removed later)
+    console.log('isLoggedIn:', isLoggedIn);
+    console.log('userMembershipTypes:', userMembershipTypes);
+
+    // Convert server-side Perk data to client-side format
+    const perks = perksToUse.map(perk => ({
+        pid: perk.pid || perk.pid,
+        title: perk.title || '',
+        discount: perk.discount || '',
+        product: perk.product || '',
+        membership: perk.membership || '',
+        expiry: perk.expiryDate || perk.expiry || '',
+        upvotes: perk.upvotes || 0,
+        downvotes: perk.downvotes || 0
+    }));
 
     const listDiv = document.getElementById('perk-list');
     const searchInput = document.getElementById('search');
@@ -19,17 +61,49 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderList(filteredPerks) {
         listDiv.innerHTML = '';
 
+        if (filteredPerks.length === 0) {
+            listDiv.innerHTML = '<p style="text-align: center; color: #999; padding: 2rem;">No perks found matching your search.</p>';
+            return;
+        }
+
         filteredPerks.forEach(perk => {
             const div = document.createElement('div');
             div.className = 'perk-card';
             div.dataset.pid = perk.pid;
 
+            // Check if this perk matches user's memberships (if logged in)
+            // Trim and normalize strings for comparison
+            const perkMembership = perk.membership ? perk.membership.trim() : '';
+            const isMatching = isLoggedIn &&
+                Array.isArray(userMembershipTypes) &&
+                userMembershipTypes.length > 0 &&
+                perkMembership !== '' &&
+                userMembershipTypes.some(type => type && String(type).trim() === perkMembership);
+
+            // Debug for first perk only
+            if (perk.pid === perks[0]?.pid) {
+                console.log('Checking perk:', perk.title, 'membership:', perkMembership);
+                console.log('User memberships:', userMembershipTypes);
+                console.log('Is matching:', isMatching);
+            }
+
+            // Add matching class for highlighting
+            if (isMatching) {
+                div.classList.add('perk-card-matching');
+            }
+
+            // Format expiry date for display
+            const expiryDisplay = perk.expiry ? new Date(perk.expiry).toLocaleDateString() : 'N/A';
+
+            // Add matching indicator badge if applicable
+            const matchingBadge = isMatching ? '<span class="matching-badge">✓ Your Membership</span>' : '';
+
             div.innerHTML = `
-                <h3>${perk.title}</h3>
+                <h3>${perk.title} ${matchingBadge}</h3>
                 <p><strong>Discount:</strong> ${perk.discount}</p>
                 <p><strong>Product:</strong> ${perk.product}</p>
-                <p><strong>Membership:</strong> ${perk.membership}</p>
-                <p><strong>Expiry:</strong> ${perk.expiry}</p>
+                <p><strong>Membership:</strong> ${perk.membership || 'N/A'}</p>
+                <p><strong>Expiry:</strong> ${expiryDisplay}</p>
                 <p>
                     <button class="upvote-btn">👍 ${perk.upvotes}</button>
                     <button class="downvote-btn">👎 ${perk.downvotes}</button>
@@ -70,8 +144,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Initial render
-    renderList(perks);
+    // Initial render - always render perks (will show empty message if no perks)
+    renderList(filteredPerks());
 
     // Update list as user types
     searchInput.addEventListener('input', () => {
