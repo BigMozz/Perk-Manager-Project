@@ -10,7 +10,10 @@
 <body>
     <div class="header-container">
         <h1>Manage Your Perks</h1>
-        <a th:href="@{/login}" class="login-button">Login</a>
+      <!--  <a th:href="@{/login}" class="login-button">Login</a> -->
+        <!-- Show Logout if user is logged in, otherwise show Login -->
+        <a th:if="${session.loggedInUser != null}" th:href="@{/logout}" class="login-button">Logout</a>
+        <a th:if="${session.loggedInUser == null}" th:href="@{/login}" class="login-button">Login</a>
     </div>
 
     <p th:if="${session.loggedInUser != null}" style="color: green;">
