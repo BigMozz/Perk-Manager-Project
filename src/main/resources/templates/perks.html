@@ -21,6 +21,9 @@
         Logged in as: <span th:text="${session.loggedInUser.name}"></span>
     </p>
 
+        <a th:href="@{/login}" class="login-button">Login</a>
+    </div>
+
     <div class="perk-container">
         <input id="perkName" type="text" placeholder="Perk Name">
         <input id="productType" type="text" placeholder="Product Type">
