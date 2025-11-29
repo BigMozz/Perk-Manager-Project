@@ -8,10 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const listDiv = document.getElementById('perk-list');
     const searchInput = document.getElementById('search');
+    const membershipFilter = document.getElementById('membershipFilter');
 
     // Check if elements exist
-    if (!listDiv || !searchInput) {
-        console.error('Required elements not found: perk-list or search');
+    if (!listDiv || !searchInput || !membershipFilter) {
         return;
     }
 
@@ -58,10 +58,16 @@ document.addEventListener('DOMContentLoaded', () => {
         renderList(filteredPerks());
     });
 
-    // Filter perks based on search
+    // Filter perks based on search and membership
     function filteredPerks() {
-        const term = searchInput.value.toLowerCase();
-        return perks.filter(p => p.product.toLowerCase().includes(term));
+        const searchTerm = searchInput.value.toLowerCase();
+        const membershipType = membershipFilter.value;
+
+        return perks.filter(p => {
+            const matchesSearch = p.product.toLowerCase().includes(searchTerm);
+            const matchesMembership = !membershipType || membershipType === '' || p.membership === membershipType;
+            return matchesSearch && matchesMembership;
+        });
     }
 
     // Initial render
@@ -69,6 +75,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Update list as user types
     searchInput.addEventListener('input', () => {
+        renderList(filteredPerks());
+    });
+
+    // Update list when membership filter changes
+    membershipFilter.addEventListener('change', () => {
         renderList(filteredPerks());
     });
 
