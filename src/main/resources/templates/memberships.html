@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Manage Memberships - Perk Manager</title>
+  <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+
+<body>
+  <div class="header-container">
+    <h1>Manage Your Memberships</h1>
+    <div class="header-buttons">
+      <a th:href="@{/perks}" class="login-button">Back to Perks</a>
+      <a th:href="@{/logout}" class="login-button">Logout</a>
+    </div>
+  </div>
+
+  <div class="user-container">
+    <h2>Welcome, <span th:text="${user.name}"></span>!</h2>
+    <p>Manage your memberships below. Your perks will be highlighted based on your active memberships.</p>
+  </div>
+
+  <!-- Current Memberships -->
+  <div class="membership-section">
+    <h2>Current Memberships</h2>
+    <div th:if="${memberships.isEmpty()}" class="empty-message">
+      <p>You don't have any memberships yet. Add one below to start seeing personalized perks!</p>
+    </div>
+    <div th:if="${!memberships.isEmpty()}" class="membership-list">
+      <div th:each="membership : ${memberships}" class="membership-card">
+        <h3 th:text="${membership.type}"></h3>
+        <p><strong>Number:</strong> <span th:text="${membership.number}"></span></p>
+        <form th:action="@{/memberships/remove}" method="post" style="margin-top: 1rem;">
+          <input type="hidden" name="mid" th:value="${membership.mid}">
+          <button type="submit" class="remove-btn">Remove Membership</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Membership Form -->
+  <div class="add-membership-section">
+    <h2>Add New Membership</h2>
+    <form th:action="@{/memberships/add}" method="post" class="membership-form">
+      <div class="form-group">
+        <label for="type">Membership Type:</label>
+        <select id="type" name="type" required>
+          <option value="" disabled selected>Select Membership Type</option>
+          <option th:each="availableType : ${availableTypes}" th:value="${availableType}" th:text="${availableType}">
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="number">Membership Number:</label>
+        <input type="number" id="number" name="number" placeholder="Enter membership number" required>
+      </div>
+      <button type="submit" class="add-btn">Add Membership</button>
+    </form>
+  </div>
+
+</body>
+
+</html>

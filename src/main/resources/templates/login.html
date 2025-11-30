@@ -8,13 +8,13 @@
 <body>
 <h2>Login</h2>
 
-<form th:action="@{/login}" th:object="${loginUser}" method="post">
+<form th:action="@{/login}" th:object="${loginUser}" method="post" id="loginForm">
     <input type="email" th:field="*{email}" placeholder="Email" required><br>
     <input type="password" th:field="*{password}" placeholder="Password" required><br>
     <button type="submit">Login</button>
 </form>
 
-<p th:text="${message}"></p>
+<p id="loginMessage" th:text="${message}" style="color: red;"></p>
 <p>Don't have an account? <a th:href="@{/signup}">Sign up</a></p>
 
 </body>

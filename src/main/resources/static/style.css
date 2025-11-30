@@ -127,6 +127,28 @@ th {
     background-color: #33C3FF;
 }
 
+.membership-button {
+    background-color: #00BFFF;
+    border: none;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.membership-button:hover {
+    background-color: #33C3FF;
+}
+
+.header-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
 /* ===== Perk Cards ===== */
 .perk-card {
     background-color: rgba(255, 255, 255, 0.05);
@@ -139,6 +161,29 @@ th {
 
 .perk-card:hover {
     border-color: rgba(51, 195, 255, 0.4);
+}
+
+.perk-card-matching {
+    border-color: rgba(0, 191, 255, 0.6) !important;
+    background-color: rgba(0, 191, 255, 0.1);
+    box-shadow: 0 0 10px rgba(0, 191, 255, 0.3);
+}
+
+.perk-card-matching:hover {
+    border-color: rgba(0, 191, 255, 0.8) !important;
+    box-shadow: 0 0 15px rgba(0, 191, 255, 0.5);
+}
+
+.matching-badge {
+    display: inline-block;
+    background-color: #00BFFF;
+    color: white;
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-left: 0.5rem;
+    vertical-align: middle;
 }
 
 .perk-card h3 {
@@ -196,4 +241,77 @@ th {
     margin: 1rem 0;
     padding: 0.5rem;
     font-weight: 500;
+}
+
+/* ===== User/Memberships Page Styles ===== */
+.user-container {
+    margin: 2rem 0;
+    padding: 1rem;
+}
+
+.membership-section {
+    margin: 2rem 0;
+}
+
+.membership-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.membership-card {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(51, 195, 255, 0.2);
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.membership-card h3 {
+    margin-top: 0;
+    color: #00BFFF;
+}
+
+.empty-message {
+    padding: 2rem;
+    text-align: center;
+    color: #999;
+}
+
+.add-membership-section {
+    margin: 3rem 0;
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(51, 195, 255, 0.1);
+    border-radius: 8px;
+}
+
+.membership-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 400px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    color: #33C3FF;
+    font-weight: 500;
+}
+
+.remove-btn {
+    background-color: #ff6b6b;
+}
+
+.remove-btn:hover {
+    background-color: #ff5252;
+}
+
+.add-btn {
+    background-color: #00BFFF;
+    align-self: flex-start;
 }

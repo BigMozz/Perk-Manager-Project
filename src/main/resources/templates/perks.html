@@ -10,6 +10,17 @@
 <body>
     <div class="header-container">
         <h1>Manage Your Perks</h1>
+        <div class="header-buttons">
+            <a th:href="@{/memberships}" class="membership-button">Manage Memberships</a>
+            <a th:href="@{/login}" th:if="${session.loggedInUser == null}" class="login-button">Login</a>
+            <a th:href="@{/logout}" th:if="${session.loggedInUser != null}" class="login-button">Logout</a>
+        </div>
+    </div>
+
+    <p th:if="${session.loggedInUser != null}" style="color: green;">
+        Logged in as: <span th:text="${session.loggedInUser.name}"></span>
+    </p>
+
         <a th:href="@{/login}" class="login-button">Login</a>
     </div>
 
@@ -39,6 +50,13 @@
     <!-- Perk list display -->
     <div id="perk-list"></div>
 
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        window.serverPerks = /*[(${perksData != null ? perksData : '[]'})]*/[];
+        window.isLoggedIn = /*[(${isLoggedIn != null ? isLoggedIn : false})]*/ false;
+        window.userMembershipTypes = /*[[${userMembershipTypes}]]*/[];
+        /*]]>*/
+    </script>
     <script th:src="@{/script.js}"></script>
 </body>
 
