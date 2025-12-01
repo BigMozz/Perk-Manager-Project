@@ -190,11 +190,4 @@ public class HomeController {
 
         return "redirect:/memberships";
     }
-
-    // ===== LOGOUT =====
-    @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        session.invalidate();
-        return "redirect:/perks";
-    }
 }
