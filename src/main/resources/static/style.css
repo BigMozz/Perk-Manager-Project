@@ -203,11 +203,21 @@ th {
 
 /* ===== Search Container ===== */
 .search-container {
+    display: flex;
+    gap: 1rem;
     margin: 2rem 0;
+    align-items: center;
 }
 
 .search-container input {
     max-width: 400px;
+    min-width: 300px;
+}
+
+/* ===== Filter Dropdown ===== */
+.search-container select {
+    max-width: 150px;
+    min-width: 120px;
 }
 
 /* ===== Perk Container ===== */

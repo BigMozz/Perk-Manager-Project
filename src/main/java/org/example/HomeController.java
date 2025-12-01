@@ -77,6 +77,22 @@ public class HomeController {
         }
     }
 
+
+    // ===== LOGOUT =====
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.removeAttribute("loggedInUser");
+        return "redirect:/perks";
+    }
+
+
+
+
+
+
+
+
+
     // ===== PERKS DASHBOARD =====
     @GetMapping("/perks")
     public String showPerks(Model model, HttpSession session) {

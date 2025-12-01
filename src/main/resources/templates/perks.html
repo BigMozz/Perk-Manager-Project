@@ -8,56 +8,60 @@
 </head>
 
 <body>
-    <div class="header-container">
-        <h1>Manage Your Perks</h1>
-        <div class="header-buttons">
-            <a th:href="@{/memberships}" class="membership-button">Manage Memberships</a>
-            <a th:href="@{/login}" th:if="${session.loggedInUser == null}" class="login-button">Login</a>
-            <a th:href="@{/logout}" th:if="${session.loggedInUser != null}" class="login-button">Logout</a>
-        </div>
+<div class="header-container">
+    <h1>Manage Your Perks</h1>
+    <div class="header-buttons">
+        <a th:href="@{/memberships}" class="membership-button">Manage Memberships</a>
+        <a th:href="@{/login}" th:if="${session.loggedInUser == null}" class="login-button">Login</a>
+        <a th:href="@{/logout}" th:if="${session.loggedInUser != null}" class="login-button">Logout</a>
     </div>
+</div>
 
-    <p th:if="${session.loggedInUser != null}" style="color: green;">
-        Logged in as: <span th:text="${session.loggedInUser.name}"></span>
-    </p>
+<p th:if="${session.loggedInUser != null}" style="color: green;">
+    Logged in as: <span th:text="${session.loggedInUser.name}"></span>
+</p>
 
-        <a th:href="@{/login}" class="login-button">Login</a>
-    </div>
+<div class="perk-container">
+    <input id="perkName" type="text" placeholder="Perk Name">
+    <input id="productType" type="text" placeholder="Product Type">
+    <input id="discount" type="text" placeholder="Discount">
+    <input id="expiryDate" type="date" placeholder="Expiry Date">
+    <select id="membership">
+        <option value="" disabled selected>Membership</option>
+        <option value="Visa">Visa</option>
+        <option value="Mastercard">Mastercard</option>
+        <option value="Air Miles">Air Miles</option>
+        <option value="CAA">CAA</option>
+    </select>
+    <button type="button" id="addPerkBtn">Add Perk</button>
+    <button type="button" id="removePerkBtn">Remove Perk</button>
+</div>
 
-    <div class="perk-container">
-        <input id="perkName" type="text" placeholder="Perk Name">
-        <input id="productType" type="text" placeholder="Product Type">
-        <input id="discount" type="text" placeholder="Discount">
-        <input id="expiryDate" type="date" placeholder="Expiry Date">
-        <select id="membership">
-            <option value="" disabled selected>Membership</option>
-            <option value="Visa">Visa</option>
-            <option value="Mastercard">Mastercard</option>
-            <option value="Air Miles">Air Miles</option>
-            <option value="CAA">CAA</option>
-        </select>
-        <button type="button" id="addPerkBtn">Add Perk</button>
-        <button type="button" id="removePerkBtn">Remove Perk</button>
-    </div>
+<p id="perkMessage"></p>
 
-    <p id="perkMessage"></p>
+<!-- Search and Filter functionality -->
+<div class="search-container">
+    <input id="search" type="text" placeholder="Search perks by product...">
+    <select id="membershipFilter">
+        <option value="">All Memberships</option>
+        <option value="Visa">Visa</option>
+        <option value="Mastercard">Mastercard</option>
+        <option value="Air Miles">Air Miles</option>
+        <option value="CAA">CAA</option>
+    </select>
+</div>
 
-    <!-- Search functionality -->
-    <div class="search-container">
-        <input id="search" type="text" placeholder="Search perks by product...">
-    </div>
+<!-- Perk list display -->
+<div id="perk-list"></div>
 
-    <!-- Perk list display -->
-    <div id="perk-list"></div>
-
-    <script th:inline="javascript">
-        /*<![CDATA[*/
-        window.serverPerks = /*[(${perksData != null ? perksData : '[]'})]*/[];
-        window.isLoggedIn = /*[(${isLoggedIn != null ? isLoggedIn : false})]*/ false;
-        window.userMembershipTypes = /*[[${userMembershipTypes}]]*/[];
-        /*]]>*/
-    </script>
-    <script th:src="@{/script.js}"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    window.serverPerks = /*[(${perksData != null ? perksData : '[]'})]*/[];
+    window.isLoggedIn = /*[(${isLoggedIn != null ? isLoggedIn : false})]*/ false;
+    window.userMembershipTypes = /*[[${userMembershipTypes}]]*/[];
+    /*]]>*/
+</script>
+<script th:src="@{/script.js}"></script>
 </body>
 
 </html>
