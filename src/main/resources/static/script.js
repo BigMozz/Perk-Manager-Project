@@ -7,6 +7,15 @@ document.addEventListener('DOMContentLoaded', () => {
         { pid: 3, title: "15% off Coffee", discount: "15%", product: "Coffee", membership: "Mastercard", expiry: "2025-11-15", upvotes: 0, downvotes: 0 }
     ];
 
+    // Store user votes locally so they can't spam
+    let userVotes = JSON.parse(localStorage.getItem('userVotes') || '{}');
+
+    // Save votes back to localStorage
+    function saveVotes() {
+        localStorage.setItem('userVotes', JSON.stringify(userVotes));
+    }
+
+
     const listDiv = document.getElementById('perk-list');
     const searchInput = document.getElementById('search');
     const membershipFilter = document.getElementById('membershipFilter');
@@ -45,19 +54,56 @@ document.addEventListener('DOMContentLoaded', () => {
     listDiv.addEventListener('click', (e) => {
         const card = e.target.closest('.perk-card');
         if (!card) return;
-
+    
         const pid = parseInt(card.dataset.pid);
         const perk = perks.find(p => p.pid === pid);
         if (!perk) return;
-
-        if (e.target.classList.contains('upvote-btn')) {
+    
+        const voteType = e.target.classList.contains('upvote-btn')
+            ? 'upvote'
+            : e.target.classList.contains('downvote-btn')
+            ? 'downvote'
+            : null;
+    
+        if (!voteType) return;
+    
+        const previous = userVotes[pid]; 
+    
+        // Remove vote if clicking the same button again 
+        if (previous === voteType) {
+            if (voteType === 'upvote') {
+                perk.upvotes = Math.max(0, perk.upvotes - 1);
+            } else {
+                perk.downvotes = Math.max(0, perk.downvotes - 1);
+            }
+            delete userVotes[pid];
+            saveVotes();
+            renderList(filteredPerks());
+            return;
+        }
+    
+        // Switching vote 
+        if (previous === 'upvote') {
+            perk.upvotes = Math.max(0, perk.upvotes - 1);
+        }
+        if (previous === 'downvote') {
+            perk.downvotes = Math.max(0, perk.downvotes - 1);
+        }
+    
+        // Apply the new vote
+        if (voteType === 'upvote') {
             perk.upvotes++;
-        } else if (e.target.classList.contains('downvote-btn')) {
+        } else {
             perk.downvotes++;
         }
-
+    
+        // Save the new vote
+        userVotes[pid] = voteType;
+        saveVotes();
+    
         renderList(filteredPerks());
     });
+    
 
     // Filter perks based on search and membership
     function filteredPerks() {
