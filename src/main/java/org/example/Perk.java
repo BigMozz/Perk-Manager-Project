@@ -8,7 +8,7 @@ import java.util.List;
 @Entity
 public class Perk {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer pid;
     private String title;
     private String discount;
